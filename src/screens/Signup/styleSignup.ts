@@ -32,12 +32,12 @@ export const styles = StyleSheet.create(
         actions: {
             flexDirection: "row",
             width: 350,
-            justifyContent: "center",
+            justifyContent: "space-between",
             marginTop: 40
         },
 
-        buttonEnter: {
-            width: 250,
+        button: {
+            width: 150,
             height: 50,
             backgroundColor: "#9852DE",
             justifyContent: "center",
@@ -49,6 +49,15 @@ export const styles = StyleSheet.create(
             fontSize: 20,
             fontWeight: "900",
             color: "#fff"
+        },
+        textInputName: {
+            height: 50,
+            width: 350,
+            borderColor: "#696969",
+            borderWidth: 2,
+            borderRadius: 5,
+            marginBottom: 15,
+            fontSize: 16
         }
     }
 )
