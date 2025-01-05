@@ -1,63 +1,88 @@
-import React from "react";
-import { StyleSheet } from "react-native"
+import styled from "styled-components/native"
+
+interface InputProps {
+    isFocused: boolean;
+    isErrored: boolean;
+}
+
+export const Container = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+`
+
+export const Title = styled.Text`
+    font-size: 55px;
+    font-weight: 900;
+`
+
+export const ContainerInput = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    font-size: 16px;
+    padding: 20px;
+`
+
+export const InputText = styled.TextInput<InputProps>`
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid
+    ${({ isFocused, isErrored }) =>
+      isFocused
+        ? 'rgba(167, 139, 250, 1)'
+        : isErrored
+        ? 'rgba(255, 0, 0, 1)'
+        : 'rgba(55, 65, 81, 1)'};
+  padding: 12px 16px;
+  color: rgba(17, 24, 39, 1);
+`;
 
 
-export const styles = StyleSheet.create(
-    {
-        main: {
-            flex: 1,
-            justifyContent:"center",
-            alignItems: "center"
-        },
-        
-        textInputEmail: {
-            height: 50,
-            width: 350,
-            borderColor: "#696969",
-            borderWidth: 2,
-            borderRadius: 5,
-            marginBottom: 15,
-            fontSize: 16
-        },
+export const ContainerButton = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 400px;
+`
 
-        textInputPassword: {
-            height: 50,
-            width: 350,
-            borderColor: "#696969",
-            borderWidth: 2,
-            borderRadius: 5,
-            fontSize: 16
-        },
+export const Button = styled.TouchableOpacity`
+    width: 90%;
+`
 
-        actions: {
-            flexDirection: "row",
-            width: 350,
-            justifyContent: "space-between",
-            marginTop: 40
-        },
+export const TextButton = styled.Text`
+    color: white;
+    background-color: rgba(167, 139, 250, 1);
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 16px;
+`
 
-        button: {
-            width: 150,
-            height: 50,
-            backgroundColor: "#9852DE",
-            justifyContent: "center",
-            borderRadius: 5
-        },
+export const ContainerText = styled.View`
+    margin-top: 20px;
+    flex-direction: row;
+    width: 400px;
+    height: 40px;
+    justify-content: center;  
 
-        titleButton: {
-            textAlign: "center",
-            fontSize: 20,
-            fontWeight: "900",
-            color: "#fff"
-        },
-        textInputName: {
-            height: 50,
-            width: 350,
-            borderColor: "#696969",
-            borderWidth: 2,
-            borderRadius: 5,
-            marginBottom: 15,
-            fontSize: 16
-        }
-    }
-)
+`
+export const TextDescription = styled.Text`
+    font-size: 20px;
+    color: rgba(55, 65, 81, 1);
+    line-height: 25px;
+`
+
+export const ButtonLogin = styled.TouchableOpacity`
+    margin-left: 5px;
+`
+
+export const TextButtonLogin = styled.Text`
+    color: rgba(167, 139, 250, 1);
+    font-weight: 600;
+    background-color: transparent;
+    font-size: 25px;
+    line-height: 25px;
+` 

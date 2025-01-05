@@ -2,80 +2,183 @@ import React, {useState} from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 import { updateProfile } from "firebase/auth";
-import { styles } from './styleSignup'
-import { View, TextInput, TouchableOpacity, Text } from "react-native"
+import { 
+        Container, 
+        ContainerInput, 
+        InputText, 
+        Title, 
+        ContainerButton, 
+        Button, 
+        TextButton, 
+        ContainerText,
+        TextDescription,
+        ButtonLogin,
+        TextButtonLogin
+} from './styleSignup'
+import { FirebaseError } from "firebase/app";
+
 import { PropsScreens } from "../../routes/interfaces";
 
+interface InputState {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+}
+
+type ValuesInput = {
+    [k in keyof InputState]: string;
+}
+
+type ValuesInputError = {
+    [k in keyof InputState]: boolean;
+}
+
 export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [name, setName] = useState<string>("")
 
-    const createUser = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up 
+    const [valuesInput, setValuesInput] = useState<ValuesInput>({
+        name: "",
+        email: "",
+        password: ""
+    })
 
-            const user = userCredential.user;
-
-            updateProfile(user, {
-                displayName: name
-            })
-            .then(() => {
-                console.log(userCredential.user)
-                navigation.navigate("Home", {name: name})
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-      
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-           console.log(errorMessage)
+    const handleValuesInput = (input: keyof InputState, value: string) => {
+        setValuesInput({
+            ...valuesInput,
+            [input]: value
         })
     }
-    return(
-        <View style={styles.main}>
-            <View>
-                
-                <TextInput
-                    style={styles.textInputName}
-                    onChangeText={(text: string) => {setName(text)}}
-                    value={name}
-                    placeholder="Nome"
-                />
-                
-                <TextInput 
-                    style={styles.textInputEmail}
-                    onChangeText={(text: string) => {setEmail(text)}}
-                    value={email}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                />
 
-                
-                <TextInput
-                    style={styles.textInputPassword}
-                    onChangeText={(text: string) => {setPassword(text)}}
-                    value={password}
-                    placeholder="Senha"
-                    secureTextEntry={true}
-                >
+    const [valuesInputError, setValuesInputError] = useState<ValuesInputError>({
+        name: false,
+        email: false,
+        password: false
+    })
 
-                </TextInput>
-            </View>
-            <View style={styles.actions}>
-                <TouchableOpacity style={styles.button} onPress={createUser}>
-                    <Text style={styles.titleButton}>{"Criar conta".toUpperCase()}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("Login")}}>
-                    <Text style={styles.titleButton}>{"Fazer Login".toUpperCase()} </Text>
-                </TouchableOpacity>
+    const [isFocused, setIsFocused] = useState<InputState>({
+        name: false,
+        email: false,
+        password: false
+    });
+
+    const handleStateFocus = (input: keyof InputState) => {
+     
+        const copyIsFocused: InputState = {...isFocused}
+
+        for(const key in copyIsFocused){
+            if(key === input){
+                copyIsFocused[key] = !copyIsFocused[key]
+            } else {
+                copyIsFocused[key as keyof InputState] = false
+            }
+        }
+
+        setIsFocused({
+            ...copyIsFocused
+        })
+    }
+
+    const handleValuesInputError = (input: keyof InputState) => {
         
-            </View>
+        setValuesInputError({
+            ...valuesInputError,
+            [input]: true
+        })
 
-        </View>
+        setTimeout(() => {
+            setValuesInputError((prev) => ({
+                ...prev,
+                [input]: false
+            }))
+        }, 5000)
+    }
+    
+    const createUser = async () => {
+
+        try {
+
+            if (valuesInput.name === "" || valuesInput.name.length < 3 ) {
+                handleValuesInputError('name')
+                throw new Error("Campo nome não pode ser vazio.")
+            }
+
+            const user = await createUserWithEmailAndPassword(auth, valuesInput.email, valuesInput.password)
+
+            await updateProfile(user.user, {
+                displayName: valuesInput.name
+            })
+
+        } catch (error) {
+
+            if(error instanceof FirebaseError){
+
+                const errorCode = error.code;
+
+                if(errorCode === 'auth/invalid-email' || errorCode === 'auth/email-already-in-use'){
+                    handleValuesInputError('email')
+                }
+
+                if(errorCode === 'auth/weak-password'){
+                    handleValuesInputError('password')
+                }
+            }
+
+            console.log(error)
+            
+        }
+    }
+
+    return(
+        <Container>
+            <Title>
+                Sign Up
+            </Title>
+            <ContainerInput>
+                <InputText
+                    placeholder="Nome"
+                    isFocused={isFocused.name}
+                    onFocus={() => handleStateFocus('name')}
+                    onChangeText={(text) => handleValuesInput('name', text)}
+                    isErrored={valuesInputError.name}
+                />
+                <InputText
+                    placeholder="Email"
+                    isFocused={isFocused.email}
+                    onFocus={() => handleStateFocus('email')}
+                    inputMode="email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    onChangeText={(text) => handleValuesInput('email', text)}
+                    isErrored={valuesInputError.email}
+                />
+                <InputText
+                    placeholder="Senha"
+                    isFocused={isFocused.password}
+                    onFocus={() => handleStateFocus('password')}
+                    secureTextEntry={true}
+                    autoCapitalize="none"
+                    onChangeText={(text) => handleValuesInput('password', text)}
+                    isErrored={valuesInputError.password}
+                    />
+            </ContainerInput>
+            <ContainerButton>
+                <Button onPress={createUser}>
+                    <TextButton>
+                        ENVIAR
+                    </TextButton>
+                </Button>
+            </ContainerButton>
+            <ContainerText>
+                <TextDescription>
+                    Já tem uma conta?
+                </TextDescription>
+                <ButtonLogin 
+                    onPress={() => navigation.navigate('Login')}
+                >
+                    <TextButtonLogin >
+                        Login
+                    </TextButtonLogin>
+                </ButtonLogin>
+            </ContainerText>
+        </Container>
     )
 }

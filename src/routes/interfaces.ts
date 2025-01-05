@@ -9,6 +9,7 @@ export type PropsStackRoutes = {
         email: string;
         userId: string;
     };
+    Profile: undefined;
 };
 
 export type PropsScreens<T extends keyof PropsStackRoutes> = NativeStackScreenProps<PropsStackRoutes, T>
@@ -19,6 +20,7 @@ export type PropsTabRoutes = {
         email: string;
         userId: string;
     };
+    Profile: undefined;
 };
 
 export type PropsTabScreens<T extends keyof PropsTabRoutes> = BottomTabScreenProps<PropsTabRoutes, T>;

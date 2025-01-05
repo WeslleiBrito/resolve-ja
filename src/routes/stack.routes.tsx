@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Signup } from '../screens/Signup/Signup'
 import Login from '../screens/Login/Login'
 import Home from '../screens/Home/Home'
+import Profile from '../screens/Profile/Profile'
 import { PropsStackRoutes } from './interfaces'
 
 const Stack = createNativeStackNavigator<PropsStackRoutes>()
@@ -16,9 +17,10 @@ export default function StackRoutes(){
                 }
             }
         >
-            <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Signup' component={Signup}/>
+            <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Home' component={Home}/>                    
+            <Stack.Screen name='Profile' component={Profile}/>                    
             
         </Stack.Navigator>
     )
