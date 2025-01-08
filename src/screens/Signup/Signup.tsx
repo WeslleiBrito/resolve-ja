@@ -12,8 +12,8 @@ import {
         TextButton, 
         ContainerText,
         TextDescription,
-        ButtonLogin,
-        TextButtonLogin
+        ButtonText,
+        NameButton
 } from './styleSignup'
 import { FirebaseError } from "firebase/app";
 
@@ -107,6 +107,8 @@ export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
                 displayName: valuesInput.name
             })
 
+            navigation.navigate('Login')
+
         } catch (error) {
 
             if(error instanceof FirebaseError){
@@ -171,13 +173,13 @@ export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
                 <TextDescription>
                     Já tem uma conta?
                 </TextDescription>
-                <ButtonLogin 
+                <ButtonText 
                     onPress={() => navigation.navigate('Login')}
                 >
-                    <TextButtonLogin >
+                    <NameButton >
                         Login
-                    </TextButtonLogin>
-                </ButtonLogin>
+                    </NameButton>
+                </ButtonText>
             </ContainerText>
         </Container>
     )

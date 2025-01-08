@@ -5,14 +5,77 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 import { PropsScreens } from "../../routes/interfaces";
 import { getItemAsync, setItemAsync, deleteItemAsync } from "expo-secure-store"
+import {
+    TextDescription,
+    ButtonText,
+    ContainerText,
+    NameButton, 
+    InputText, 
+    ContainerInput
+} from '../Signup/styleSignup'
+import {FirebaseError} from "firebase/app"
 
+interface InputState {
+    email: boolean;
+    password: boolean;
+}
 
+type ValuesInput = {
+    [k in keyof InputState]: string;
+}
+
+type ValuesInputError = {
+    [k in keyof InputState]: boolean;
+}
 
 export default function Login({ navigation }: PropsScreens<'Login'>){
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const apiKey = "AIzaSyDi8iqz06qAthG_DmbzW8Szxtt-BKGJQpk"
     
+    const [valuesInputError, setValuesInputError] = useState<ValuesInputError>({
+            email: false,
+            password: false
+        })
+    
+        const [isFocused, setIsFocused] = useState<InputState>({
+            email: false,
+            password: false
+        });
+    
+    const handleStateFocus = (input: keyof InputState) => {
+        
+        const copyIsFocused: InputState = {...isFocused}
+
+        for(const key in copyIsFocused){
+            if(key === input){
+                copyIsFocused[key] = !copyIsFocused[key]
+            } else {
+                copyIsFocused[key as keyof InputState] = false
+            }
+        }
+
+        setIsFocused({
+            ...copyIsFocused
+        })
+    }
+
+    const handleValuesInputError = (input: keyof InputState) => {
+        
+        setValuesInputError({
+            ...valuesInputError,
+            [input]: true
+        })
+
+        setTimeout(() => {
+            setValuesInputError((prev) => ({
+                ...prev,
+                [input]: false
+            }))
+        }, 5000)
+    }
+    
+
     const saveUid = async(uid: string): Promise<void> => {
         await setItemAsync("userId", uid)
     }
@@ -66,20 +129,22 @@ export default function Login({ navigation }: PropsScreens<'Login'>){
 
     }
 
-    const handleLogin = () => {
-        
-        signInWithEmailAndPassword(auth, email, password)
-        .then( async (userCredential) => {
-            const user = userCredential.user;
+    const handleLogin = async () => {
+        console.log("Login -> 133 Fui chamado")
+        try {
+            const login = await signInWithEmailAndPassword(auth, email, password)
+            const user = login.user
             await clearUid()
             await saveUid(user.uid)
             navigation.navigate("Home", {name: user.displayName || "teste", email: email, userId: user.uid})
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage)
-        })
+        } catch (error) {
+
+            if(error instanceof FirebaseError){
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+            }  
+        }
     }
 
     useEffect(() => {
@@ -88,27 +153,45 @@ export default function Login({ navigation }: PropsScreens<'Login'>){
 
     return(
         <View style={styleLogin.container}>
-            <TextInput
-                style={styleLogin.input}
-                placeholder="Email"
-                keyboardType="email-address"
-                onChangeText={(text: string) => {setEmail(text)}}
-                value={email}
-            />
-            <TextInput
-                style={styleLogin.input}
-                placeholder="Senha"
-                secureTextEntry={true}
-                onChangeText={(text: string) => {setPassword(text)}}
-                value={password}
-            />
+           <ContainerInput>
+            <InputText
+                    isFocused={isFocused.email}
+                    onFocus={() => handleStateFocus('email')}
+                    isErrored={valuesInputError.email}
+                    placeholder="Email"
+                    keyboardType="email-address"
+                    onChangeText={(text: string) => {setEmail(text)}}
+                    autoCapitalize="none"
+                    value={email}
+                />
+                <InputText
+                    isFocused={isFocused.email}
+                    onFocus={() => handleStateFocus('password')}
+                    isErrored={valuesInputError.email}
+                    placeholder="Senha"
+                    secureTextEntry={true}
+                    onChangeText={(text: string) => {setPassword(text)}}
+                    autoCapitalize="none"
+                    value={password}
+                />
+           </ContainerInput>
 
-            <TouchableOpacity style={styleLogin.button} onPress={handleLogin}>
+            <TouchableOpacity style={styleLogin.button} onPress={async () => {await handleLogin()}}>
                 <Text style={styleLogin.textButton}>{"Entrar".toUpperCase()}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styleLogin.button} onPress={() => {navigation.navigate("Signup")}}>
-                <Text style={styleLogin.textButton}>{"Criar conta".toUpperCase()}</Text>
-            </TouchableOpacity>
+
+            <ContainerText>
+                <TextDescription>
+                    Criar uma nova conta?
+                </TextDescription>
+                <ButtonText 
+                    onPress={() => navigation.navigate('Signup')}
+                >
+                    <NameButton >
+                        Criar
+                    </NameButton>
+                </ButtonText>
+            </ContainerText>
         </View>
     )
 }

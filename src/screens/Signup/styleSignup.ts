@@ -37,6 +37,7 @@ export const InputText = styled.TextInput<InputProps>`
         : 'rgba(55, 65, 81, 1)'};
   padding: 12px 16px;
   color: rgba(17, 24, 39, 1);
+  margin-bottom: 15px;
 `;
 
 
@@ -75,11 +76,11 @@ export const TextDescription = styled.Text`
     line-height: 25px;
 `
 
-export const ButtonLogin = styled.TouchableOpacity`
+export const ButtonText = styled.TouchableOpacity`
     margin-left: 5px;
 `
 
-export const TextButtonLogin = styled.Text`
+export const NameButton = styled.Text`
     color: rgba(167, 139, 250, 1);
     font-weight: 600;
     background-color: transparent;
