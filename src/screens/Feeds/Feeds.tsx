@@ -1,17 +1,16 @@
 import React, {useState} from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { PropsScreens, PropsTabScreens } from "../../routes/interfaces";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
+import { PropsTabScreens } from "../../routes/interfaces";
 import { styleFeeds } from "./feedsStyle";
 import { addDoc, collection } from "firebase/firestore"
 import { db } from "../../services/firebaseConfig";
-import { getDownloadImageURL } from "../../services/getDownloadURL"
+
 
 export default function Feeds({ navigation, route }: PropsTabScreens<"Feeds">) {
     const { name, email, userId } = route.params;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [homeIcon, setHomeIcon] = useState("");
+
     
     const createUser = async () => {
         console.log(firstName, lastName, email, userId);
