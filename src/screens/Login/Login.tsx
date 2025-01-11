@@ -1,79 +1,57 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {View, TouchableOpacity, TextInput, Text} from "react-native"
 import { styleLogin } from "./styleLogin";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebaseConfig";
 import { PropsScreens } from "../../routes/interfaces";
-import { getItemAsync, setItemAsync, deleteItemAsync } from "expo-secure-store"
-
+import {} from "react"
+import { AppContext } from "../../context/AppContext";
 
 
 export default function Login({ navigation }: PropsScreens<'Login'>){
     const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const apiKey = "AIzaSyDi8iqz06qAthG_DmbzW8Szxtt-BKGJQpk"
-    
-    const saveUid = async(uid: string): Promise<void> => {
-        await setItemAsync("userId", uid)
-    }
+    const [password, setPassword] = useState<string>("")    
+    const context = useContext(AppContext)
+    const { user, handleUser, loading } = context
 
-    const getUid = async() => {
 
-        const getUserId = await getItemAsync("userId")
+    const checkUser = async () => {
 
-        if (getUserId === null){
-            return ""
-        }else{
-            return getUserId
-        }
-    }
-
-    const clearUid = async() => {
-        await deleteItemAsync("userId")
-    }
-
-    const getDataUser = async(uid: string): Promise<{name: string, email: string, userId: string, photo: string}> => {
-        
-        const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`,{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                idToken: [uid]
+        if (!loading && user){
+            navigation.navigate("Home", {
+                name: user.name || "",
+                email: user.email || "",
+                token: user.name || "",
+                userId: user.idUser,
+                photo: user.photo
             })
-        })
-
-        const [data] = await response.json()
-        console.log(response)
-        return{
-            name: data.displayName,
-            email: data.email,
-            userId: data.localId,
-            photo: data.photoUrl
         }
-    }
-
-    const checkUser = async() => {
-
-        const uid = await getUid()
-        console.log("foi chamado o checkUser")
-        if (uid !== ""){
-            const data = await getDataUser(uid)
-            console.log(data)
-            navigation.navigate("Home", {name: data.name, email: data.email, userId: data.userId})
-        }
-
     }
 
     const handleLogin = () => {
         
         signInWithEmailAndPassword(auth, email, password)
         .then( async (userCredential) => {
-            const user = userCredential.user;
-            await clearUid()
-            await saveUid(user.uid)
-            navigation.navigate("Home", {name: user.displayName || "teste", email: email, userId: user.uid})
+
+            const user = userCredential.user
+
+            await handleUser(
+                {
+                    email: user.email,
+                    idUser: user.uid,
+                    name: user.displayName,
+                    photo: user.photoURL,
+                    token: await user.getIdToken()
+                }
+            )
+           
+            navigation.navigate("Home", {
+                name: user.displayName || "teste", 
+                email: email, 
+                userId: user.uid, 
+                token: await user.getIdToken(),
+                photo: user.photoURL
+            })
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -84,7 +62,7 @@ export default function Login({ navigation }: PropsScreens<'Login'>){
 
     useEffect(() => {
         checkUser()
-    }, [])
+    }, [loading, user])
 
     return(
         <View style={styleLogin.container}>

@@ -17,8 +17,8 @@ export default function StackRoutes(){
                 }
             }
         >
-            <Stack.Screen name='Signup' component={Signup}/>
             <Stack.Screen name='Login' component={Login}/>
+            <Stack.Screen name='Signup' component={Signup}/>
             <Stack.Screen name='Home' component={Home}/>                    
             <Stack.Screen name='Profile' component={Profile}/>                    
             

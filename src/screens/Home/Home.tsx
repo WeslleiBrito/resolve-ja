@@ -1,34 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Image } from "expo-image"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feeds from "../Feeds/Feeds";
 import { PropsScreens } from "../../routes/interfaces"; 
 import { PropsTabRoutes } from "../../routes/interfaces"; 
 import Profile from "../Profile/Profile";
-import { getDownloadImageURL, listFilesIcons } from "../../services/getDownloadURL";
+
 
 
 const Tab = createBottomTabNavigator<PropsTabRoutes>();
 
 export default function Home({ navigation, route }: PropsScreens<"Home">) {
     const { name, email, userId } = route.params;
-    const [icons, setIcons] = useState({
-        home: ""
-    });
-
-
-    useEffect(() => {
-        listFilesIcons();
-
-        getDownloadImageURL("botao-de-inicio 1.png")
-            .then((url) => {
-                setIcons({ ...icons, home: url || ""});
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-  
+    
+    const icons = {
+        home: require('../../../assets/icons/botao-de-inicio.png'),
+        profile: require('../../../assets/icons/do-utilizador.png')
+    }
 
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -68,7 +56,7 @@ export default function Home({ navigation, route }: PropsScreens<"Home">) {
                 options={{
                     tabBarIcon: () => (
                         <Image
-                            source={icons.home}
+                            source={icons.profile}
                             style={{ width: 20, height: 20 }}
                         />
                     ),

@@ -8,6 +8,8 @@ export type PropsStackRoutes = {
         name: string;
         email: string;
         userId: string;
+        photo?: string | null;
+        token: string 
     };
     Profile: undefined;
 };

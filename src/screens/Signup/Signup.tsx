@@ -137,7 +137,7 @@ export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
                     placeholder="Nome"
                     isFocused={isFocused.name}
                     onFocus={() => handleStateFocus('name')}
-                    onChangeText={(text) => handleValuesInput('name', text)}
+                    onChangeText={(text: string) => handleValuesInput('name', text)}
                     isErrored={valuesInputError.name}
                 />
                 <InputText
@@ -147,7 +147,7 @@ export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
                     inputMode="email"
                     keyboardType="email-address"
                     autoCapitalize="none"
-                    onChangeText={(text) => handleValuesInput('email', text)}
+                    onChangeText={(text: string) => handleValuesInput('email', text)}
                     isErrored={valuesInputError.email}
                 />
                 <InputText
@@ -156,7 +156,7 @@ export const Signup = ( {navigation}: PropsScreens<'Signup'> ) => {
                     onFocus={() => handleStateFocus('password')}
                     secureTextEntry={true}
                     autoCapitalize="none"
-                    onChangeText={(text) => handleValuesInput('password', text)}
+                    onChangeText={(text: string) => handleValuesInput('password', text)}
                     isErrored={valuesInputError.password}
                     />
             </ContainerInput>
