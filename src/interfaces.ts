@@ -1,3 +1,9 @@
+import { } from 'drizzle-orm/expo-sqlite/migrator';
+
+export interface ErrorMigration {
+    cause?: unknown;
+}
+
 export type TUser = {
     name: string | null,
     email: string | null,
@@ -9,20 +15,84 @@ export type TUser = {
 export interface TValueDefault {
     user: TUser | null,
     handleUser: (data: TUser | null) =>  Promise<void>,
-    loading: boolean
+    loading: boolean,
+    error: undefined | ErrorMigration,
+    address: IAddressLocation | null
 }
 
 export interface PropsGlobalState {
     children: React.ReactNode
 }
 
-type TIconData = {
-    name: string,
 
-}
 export interface Icon {
     home: {
         home: string,
         profile: string
+    }
+}
+
+enum STATUS {
+    IN_PROGRESS = "in_progress",
+    OPEN = "open",
+    FINISHED = "finished",
+    CANCELED = "canceled"
+}
+
+
+export interface IAddressLocation {
+    country: string
+    state: string
+    city_district: string
+    suburb?: string
+    road: string
+    type: string
+    geoLocation: {
+        longitude: number
+        latitude: number
+    }
+}
+
+export interface IComments {
+    idComment: string
+    idPost: string
+    idAuthor: string
+    nameAuthor: string
+    photoAuthor: string
+    parentComments: string | undefined
+    commentsChildren: Array<IComments>  
+    content: string
+    like: {
+        idLike: string
+        idUser: string
+        like: boolean
+    }
+}
+
+export interface Posts {
+    idPost: string
+    idAuthor: string
+    nameAuthor: string
+    photoAuthor: string
+    media?: {
+        type: string
+        url: string
+    }
+    content: string
+    like: Array<
+        {
+            idLike: string
+            idUser: string
+            like: boolean
+            nameAuthor: string
+            photoAuthor: string
+        }
+    >
+    comments: IComments
+    location: IAddressLocation
+    responsible?: string
+    statusDemand:  {
+        idStatusDemand: string
+        name: STATUS
     }
 }

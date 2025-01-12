@@ -9,7 +9,21 @@ const valueDefault: TValueDefault = {
         token: "",
         photo: ""
     },
-    handleUser: async () => {}
+    handleUser: async () => {},
+    address: {
+        city_district: "",
+        country: "",
+        geoLocation: {
+            latitude: 0,
+            longitude: 0
+        },
+        road: "",
+        state: "",
+        type: "",
+        suburb: undefined
+    },
+    error: undefined,
+    loading: true
 }
 
 
