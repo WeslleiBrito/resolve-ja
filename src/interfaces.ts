@@ -32,7 +32,7 @@ export interface Icon {
     }
 }
 
-enum STATUS {
+export enum STATUS {
     IN_PROGRESS = "in_progress",
     OPEN = "open",
     FINISHED = "finished",
@@ -69,7 +69,7 @@ export interface IComments {
     }
 }
 
-export interface Posts {
+export interface IPosts {
     idPost: string
     idAuthor: string
     nameAuthor: string

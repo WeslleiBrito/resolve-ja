@@ -1,10 +1,12 @@
-export const posts = [
+import { IPosts, STATUS } from "../interfaces";
+
+export const posts: Array<IPosts> = [
     {
       idPost: "eef42b15-1372-44b6-b57e-8816362fe71b",
       idAuthor: "f7abbe1c-4542-4898-b393-de96008de1e7",
       nameAuthor: "Author_f7ab",
       photoAuthor: "https://picsum.photos/seed/f7ab/50/50",
-      media: null,
+      media: undefined,
       content: "This is a post with ID eef42b15-1372-44b6-b57e-8816362fe71b.",
       like: [
         {
@@ -21,7 +23,7 @@ export const posts = [
         idAuthor: "f1abb6a8-e7c9-4281-a967-22a1115f600d",
         nameAuthor: "Author_9f6d",
         photoAuthor: "https://picsum.photos/seed/9f6d/50/50",
-        parentComments: null,
+        parentComments: undefined,
         commentsChildren: [],
         content: "This is a comment for post eef42b15-1372-44b6-b57e-8816362fe71b.",
         like: {
@@ -45,7 +47,7 @@ export const posts = [
       responsible: "Responsible_f7ab",
       statusDemand: {
         idStatusDemand: "8dabdc9f-ee24-45f7-9284-16e7e5b098c9",
-        name: "open"
+        name: STATUS.OPEN
       }
     },
     {
@@ -80,7 +82,7 @@ export const posts = [
         idAuthor: "ef4f19bd-a5c4-4387-ba58-a216fe2f82c7",
         nameAuthor: "Author_5e24",
         photoAuthor: "https://picsum.photos/seed/5e24/50/50",
-        parentComments: null,
+        parentComments: undefined,
         commentsChildren: [],
         content: "This is a comment for post 038db1dc-5a3e-40a4-8649-1e2994c6eda0.",
         like: {
@@ -101,10 +103,10 @@ export const posts = [
           latitude: -38.749171
         }
       },
-      responsible: null,
+      responsible: undefined,
       statusDemand: {
         idStatusDemand: "9507e898-6480-473a-bd62-c262881e5ca8",
-        name: "in_progress"
+        name: STATUS.IN_PROGRESS
       }
     }
     // Outros objetos omitidos por brevidade
