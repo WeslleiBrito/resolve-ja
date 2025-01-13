@@ -1,6 +1,4 @@
 import { StyleSheet } from "react-native";
-import { auth } from "../../services/firebaseConfig";
-
 
 export const stylePostItem = StyleSheet.create({
     container: {

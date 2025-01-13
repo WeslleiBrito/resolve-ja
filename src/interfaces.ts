@@ -1,4 +1,3 @@
-import { } from 'drizzle-orm/expo-sqlite/migrator';
 
 export interface ErrorMigration {
     cause?: unknown;
@@ -17,7 +16,8 @@ export interface TValueDefault {
     handleUser: (data: TUser | null) =>  Promise<void>,
     loading: boolean,
     error: undefined | ErrorMigration,
-    address: IAddressLocation | null
+    address: IAddressLocation | null,
+    posts: Array<IPosts>
 }
 
 export interface PropsGlobalState {
@@ -78,7 +78,7 @@ export interface IPosts {
         type: string
         url: string
     }
-    content: string
+    description: string
     like: Array<
         {
             idLike: string
@@ -88,11 +88,15 @@ export interface IPosts {
             photoAuthor: string
         }
     >
-    comments: IComments
+    comments: Array<IComments>
     location: IAddressLocation
     responsible?: string
     statusDemand:  {
         idStatusDemand: string
         name: STATUS
+    },
+    sector: {
+        idSector: string
+        nameSector: string
     }
 }

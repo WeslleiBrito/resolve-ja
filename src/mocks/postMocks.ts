@@ -1,13 +1,16 @@
 import { IPosts, STATUS } from "../interfaces";
 
-export const posts: Array<IPosts> = [
+const postsBase: Array<IPosts> = [
     {
       idPost: "eef42b15-1372-44b6-b57e-8816362fe71b",
       idAuthor: "f7abbe1c-4542-4898-b393-de96008de1e7",
-      nameAuthor: "Author_f7ab",
-      photoAuthor: "https://picsum.photos/seed/f7ab/50/50",
-      media: undefined,
-      content: "This is a post with ID eef42b15-1372-44b6-b57e-8816362fe71b.",
+      nameAuthor: "Velho da lancha",
+      photoAuthor: require("D:/Projeto/resolve-ja/assets/images/mocks/close-up-senior-man-with-grey-hair.jpg"),
+      media: {
+        type: "img",
+        url: require("D:/Projeto/resolve-ja/assets/images/mocks/ponto-de-onibus.png")
+      },
+      description: "This is a post with ID eef42b15-1372-44b6-b57e-8816362fe71b.",
       like: [
         {
           idLike: "ef31324e-066f-43d2-b734-06f0491c008f",
@@ -17,7 +20,7 @@ export const posts: Array<IPosts> = [
           photoAuthor: "https://picsum.photos/seed/f7abbe1c-4542-4898-b393-de96008de1e7/50/50"
         }
       ],
-      comments: {
+      comments: [{
         idComment: "9f6dcdd6-9b82-4d5f-ab7b-9c01af2abf22",
         idPost: "eef42b15-1372-44b6-b57e-8816362fe71b",
         idAuthor: "f1abb6a8-e7c9-4281-a967-22a1115f600d",
@@ -31,7 +34,7 @@ export const posts: Array<IPosts> = [
           idUser: "f03118de-8aed-495c-98c0-1e9a2fd2ef79",
           like: true
         }
-      },
+      }],
       location: {
         country: "Japan",
         state: "SP",
@@ -48,6 +51,10 @@ export const posts: Array<IPosts> = [
       statusDemand: {
         idStatusDemand: "8dabdc9f-ee24-45f7-9284-16e7e5b098c9",
         name: STATUS.OPEN
+      },
+      sector: {
+        idSector: "6ca48a73-b0fd-4dd4-b6fa-640109db8883",
+        nameSector: "Transporte"
       }
     },
     {
@@ -59,7 +66,7 @@ export const posts: Array<IPosts> = [
         type: "video",
         url: "https://picsum.photos/seed/038d/200/200"
       },
-      content: "This is a post with ID 038db1dc-5a3e-40a4-8649-1e2994c6eda0.",
+      description: "This is a post with ID 038db1dc-5a3e-40a4-8649-1e2994c6eda0.",
       like: [
         {
           idLike: "f20eb455-36e6-42b0-8c11-7f8e029f5871",
@@ -76,7 +83,7 @@ export const posts: Array<IPosts> = [
           photoAuthor: "https://picsum.photos/seed/2d0b1dfa-b831-44d0-9d0d-875605e72f7e/50/50"
         }
       ],
-      comments: {
+      comments: [{
         idComment: "5e24dab4-ead3-497d-860f-bbed800e8300",
         idPost: "038db1dc-5a3e-40a4-8649-1e2994c6eda0",
         idAuthor: "ef4f19bd-a5c4-4387-ba58-a216fe2f82c7",
@@ -90,7 +97,7 @@ export const posts: Array<IPosts> = [
           idUser: "18b8c91e-3bf2-4c73-b3e1-5430a7781a46",
           like: false
         }
-      },
+      }],
       location: {
         country: "USA",
         state: "ON",
@@ -107,8 +114,80 @@ export const posts: Array<IPosts> = [
       statusDemand: {
         idStatusDemand: "9507e898-6480-473a-bd62-c262881e5ca8",
         name: STATUS.IN_PROGRESS
-      }
+      },
+      sector: {
+        idSector: "6da8885b-53fb-4516-aec6-91feb2c00ca7",
+        nameSector: "Saúde"
     }
-    // Outros objetos omitidos por brevidade
-  ];
+  }
+];
+
+export const postsMock: Array<IPosts> = [
+  ...postsBase, 
+  ...Array.from({ length: 8 }, (_, index) => ({
+    idPost: `post-${index + 1}`,
+    idAuthor: `author-${index + 1}`,
+    nameAuthor: `Author_${index + 1}`,
+    photoAuthor: `https://picsum.photos/seed/author-${index + 1}/50/50`,
+    media: index % 2 === 0
+      ? {
+          type: "image",
+          url: `https://picsum.photos/seed/post-${index + 1}/200/200`,
+        }
+      : undefined,
+    description: `This is a post with ID post-${index + 1}.`,
+    like: [
+      {
+        idLike: `like-${index + 1}-1`,
+        idUser: `user-${index + 1}-1`,
+        like: index % 3 === 0,
+        nameAuthor: `User_${index + 1}`,
+        photoAuthor: `https://picsum.photos/seed/user-${index + 1}/50/50`,
+      },
+    ],
+    comments: [{
+      idComment: `comment-${index + 1}`,
+      idPost: `post-${index + 1}`,
+      idAuthor: `comment-author-${index + 1}`,
+      nameAuthor: `Commenter_${index + 1}`,
+      photoAuthor: `https://picsum.photos/seed/comment-author-${index + 1}/50/50`,
+      parentComments: undefined,
+      commentsChildren: [],
+      content: `This is a comment for post-${index + 1}.`,
+      like: {
+        idLike: `like-comment-${index + 1}`,
+        idUser: `user-comment-${index + 1}`,
+        like: index % 2 === 0,
+      },
+    }],
+    location: {
+      country: `Country_${index + 1}`,
+      state: `State_${index + 1}`,
+      city_district: `District_${index + 1}`,
+      suburb: `Suburb_${index + 1}`,
+      road: `Road_${index + 1}`,
+      type: index % 2 === 0 ? "Residential" : "Commercial",
+      geoLocation: {
+        longitude: parseFloat((Math.random() * 180 - 90).toFixed(6)),
+        latitude: parseFloat((Math.random() * 360 - 180).toFixed(6)),
+      },
+    },
+    responsible: index % 2 === 0 ? `Responsible_${index + 1}` : undefined,
+    statusDemand: {
+      idStatusDemand: `status-${index + 1}`,
+      name: index % 4 === 0
+        ? STATUS.OPEN
+        : index % 4 === 1
+        ? STATUS.IN_PROGRESS
+        : index % 4 === 2
+        ? STATUS.FINISHED
+        : STATUS.CANCELED,
+    },
+    sector: {
+      idSector: `sector-${index + 1}`,
+      nameSector: "Saúde"
+    }
+  })),
+];
+
   

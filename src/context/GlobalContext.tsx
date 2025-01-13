@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import {AppContext} from "./AppContext"
-import { IAddressLocation, PropsGlobalState, TUser } from '../interfaces'
+import { IAddressLocation, PropsGlobalState, TUser, TValueDefault } from '../interfaces'
 import * as SQLite from "expo-sqlite"
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
@@ -11,6 +11,7 @@ import {
     getCurrentPositionAsync,
     LocationObject
 } from "expo-location"
+import { postsMock } from "../mocks/postMocks"
 
 const expo =  SQLite.openDatabaseSync("database.db")
 const db = drizzle(expo)
@@ -133,12 +134,13 @@ const GlobalState: React.FC<PropsGlobalState> = ({ children }) => {
        getUser()
     }, [success])
 
-    const contextValue = {
+    const contextValue: TValueDefault = {
         user,
         handleUser,
         loading,
         error,
-        address
+        address,
+        posts: postsMock
     }
 
     return(

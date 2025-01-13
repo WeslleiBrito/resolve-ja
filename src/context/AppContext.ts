@@ -23,7 +23,8 @@ const valueDefault: TValueDefault = {
         suburb: undefined
     },
     error: undefined,
-    loading: true
+    loading: true,
+    posts: []
 }
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
+// import { Image } from 'expo-image'
 import { 
     AntDesign,
     FontAwesome,
@@ -8,46 +9,44 @@ import {
  } from "@expo/vector-icons";
 
 import { stylePostItem } from "./stylePostItem";
-import { TPostItem } from '../interfaces';
-import { AdvancedImage } from '@cloudinary/react'
-import ImageItem from '../../services/claudinaryConfig';
+import { IPosts } from '../../interfaces';
 
-export default function PostItem(props: TPostItem) {
+export default function PostItem(props: IPosts) {
 
     const {
-        author, 
+        nameAuthor, 
         sector, 
-        likes, 
+        like, 
         comments, 
-        shares,
         description,
-        media
+        media,
+        photoAuthor
     } = props;
 
-    const image  = ImageItem({
-        nameImage: media || ""
-    })
-
+   
     return (
         <View style={stylePostItem.container}>
             <View style={stylePostItem.header}>
                 <View style={stylePostItem.author}>
                     <Image
                         style={stylePostItem.avatar}
-                        source={{uri: "https://imgur.com/ArFpWFy"}}
+                        source={photoAuthor}
                     />
-                    <Text style={stylePostItem.author}>{author}</Text>
+                    <Text style={stylePostItem.author}>{nameAuthor}</Text>
                 </View>
                
-                <Text style={stylePostItem.sector}>{sector}</Text>
+                <Text style={stylePostItem.sector}>{sector.nameSector}</Text>
             </View>
-
-            <AdvancedImage cldImg={image}/>
+            <View>
+                {
+                    media ? <Image source={ media.url }/> : null
+                }
+            </View>
             <Text style={stylePostItem.description}>{description}</Text>
             <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 10}}>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <AntDesign name="like2" size={24} color="black" />
-                    <Text>{likes}</Text>
+                    
                 </View>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <FontAwesome name="commenting" size={24} color="black" />
@@ -55,7 +54,6 @@ export default function PostItem(props: TPostItem) {
                 </View>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <Fontisto name="share-a" size={24} color="black" />
-                    <Text>{shares}</Text>
                 </View>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <FontAwesome5 name="bookmark" size={24} color="black" />
