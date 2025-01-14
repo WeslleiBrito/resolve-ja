@@ -5,12 +5,14 @@ const postsBase: Array<IPosts> = [
       idPost: "eef42b15-1372-44b6-b57e-8816362fe71b",
       idAuthor: "f7abbe1c-4542-4898-b393-de96008de1e7",
       nameAuthor: "Velho da lancha",
-      photoAuthor: require("D:/Projeto/resolve-ja/assets/images/mocks/close-up-senior-man-with-grey-hair.jpg"),
+      photoAuthor: require("../../assets/images/mocks/close-up-senior-man-with-grey-hair.jpg"),
       media: {
         type: "img",
-        url: require("D:/Projeto/resolve-ja/assets/images/mocks/ponto-de-onibus.png")
+        url: require("../../assets/images/mocks/ponto-de-onibus.png")
       },
-      description: "This is a post with ID eef42b15-1372-44b6-b57e-8816362fe71b.",
+      description: `É inadmissível que o transporte público em Feira de Santana continue nesse estado de abandono. Os ônibus atrasam, estão lotados, mal conservados e deixam milhares de cidadãos à mercê de um sistema que não funciona. Quem depende disso para trabalhar, estudar ou se locomover vive diariamente uma batalha injusta e humilhante.
+
+Chega de promessas vazias! Precisamos de ônibus pontuais, em bom estado e com horários que atendam a população de verdade. Como cidadãos, exigimos respeito e ações concretas. Feira de Santana não pode mais aceitar esse descaso!`,
       like: [
         {
           idLike: "ef31324e-066f-43d2-b734-06f0491c008f",

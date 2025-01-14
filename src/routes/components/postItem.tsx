@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-// import { Image } from 'expo-image'
+import { View, Text } from 'react-native';
+import { Image } from 'expo-image'
 import { 
     AntDesign,
     FontAwesome,
@@ -22,8 +22,8 @@ export default function PostItem(props: IPosts) {
         media,
         photoAuthor
     } = props;
-
-   
+    
+    
     return (
         <View style={stylePostItem.container}>
             <View style={stylePostItem.header}>
@@ -39,7 +39,7 @@ export default function PostItem(props: IPosts) {
             </View>
             <View>
                 {
-                    media ? <Image source={ media.url }/> : null
+                    media ? <Image style={{width: 200, height: 300}} source={media.url}/> : null
                 }
             </View>
             <Text style={stylePostItem.description}>{description}</Text>
