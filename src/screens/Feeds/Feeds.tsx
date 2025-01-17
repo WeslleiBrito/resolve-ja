@@ -1,10 +1,10 @@
 import React, {useContext} from "react";
-import { View } from "react-native";
+import { FlatList } from "react-native";
 import { PropsTabScreens } from "../../routes/interfaces";
 import { styleFeeds } from "./feedsStyle";
 import { AppContext } from "../../context/AppContext";
-import PostItem from "../../routes/components/postItem";
-
+import PostItem from "../../components/postItem";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context"
 
 export default function Feeds({ navigation, route }: PropsTabScreens<"Feeds">) {
     
@@ -12,43 +12,30 @@ export default function Feeds({ navigation, route }: PropsTabScreens<"Feeds">) {
     const { posts } = context
 
     return (
-        <View style={styleFeeds.container}>
-            {
-                posts.map((post) => {
-                    const {
-                        comments,
-                        description,
-                        idAuthor,
-                        idPost,
-                        like,
-                        location,
-                        nameAuthor,
-                        photoAuthor,
-                        sector,
-                        statusDemand,
-                        media,
-                        responsible
-                    } = post
-
-                    return (
-                        <PostItem 
-                            key={idPost}
-                            comments={comments}
-                            description={description}
-                            idAuthor={idAuthor}
-                            idPost={idPost}
-                            like={like}
-                            location={location}
-                            nameAuthor={nameAuthor}
-                            photoAuthor={photoAuthor}
-                            sector={sector}
-                            statusDemand={statusDemand}
-                            media={media}
-                            responsible={responsible}  
-                        /> 
-                    )
-                })[0]
-            }
-        </View>
+        <SafeAreaProvider>
+            <SafeAreaView style={styleFeeds.container}>
+                <FlatList
+                    data={posts}
+                    renderItem={({item}) => {
+                        return <PostItem
+                            comments={item.comments}
+                            description={item.description}
+                            idAuthor={item.idAuthor}
+                            idPost={item.idPost}
+                            like={item.like}
+                            location={item.location}
+                            nameAuthor={item.nameAuthor}
+                            photoAuthor={item.photoAuthor}
+                            sector={item.sector}
+                            statusDemand={item.statusDemand}
+                            media={item.media}
+                            responsible={item.responsible}
+                        ></PostItem>
+                    }}
+                    
+                    keyExtractor={item => item.idPost}
+                />
+            </SafeAreaView>
+        </SafeAreaProvider>
     );
 }

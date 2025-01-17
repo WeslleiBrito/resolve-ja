@@ -37,5 +37,8 @@ export const styleFeeds = StyleSheet.create({
     textButton: {
         color: "#fff",
         fontSize: 16
+    },
+    containerList: {
+        
     }
 })

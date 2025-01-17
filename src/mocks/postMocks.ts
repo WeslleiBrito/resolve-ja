@@ -65,8 +65,8 @@ Chega de promessas vazias! Precisamos de ônibus pontuais, em bom estado e com h
       nameAuthor: "Author_2d0b",
       photoAuthor: "https://picsum.photos/seed/2d0b/50/50",
       media: {
-        type: "video",
-        url: "https://picsum.photos/seed/038d/200/200"
+        type: "img",
+        url: "https://images.unsplash.com/photo-1734640113825-24dd7c056052?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       description: "This is a post with ID 038db1dc-5a3e-40a4-8649-1e2994c6eda0.",
       like: [
