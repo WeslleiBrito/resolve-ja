@@ -1,4 +1,28 @@
-import { IPosts, STATUS } from "../interfaces";
+import { IComments, IPosts, STATUS } from "../interfaces";
+const likesComments: Array<IComments['like'][number]> = [
+  ...Array.from(
+    { length: 36}, (_, index) => (
+      {
+        idLike: `like-${index + 1}`,
+        idUser: `user-${index + 1}`,
+        like: index % 2 === 0
+      }
+    )
+  )
+]
+const commentsItens: Array<IComments> = [
+  ...Array.from({ length: 1354}, (_, index) => ({
+    idComment: `comment-${index + 1}`,
+    idPost: `post-${index + 1}`,
+    idAuthor: `comment-author-${index + 1}`,
+    nameAuthor: `Commenter_${index + 1}`,
+    photoAuthor: `https://picsum.photos/seed/comment-author-${index + 1}/50/50`,
+    parentComments: undefined,
+    commentsChildren: [],
+    content: `This is a comment for post-${index + 1}.`,
+    like: likesComments
+  }))
+]
 
 const postsBase: Array<IPosts> = [
     {
@@ -31,11 +55,7 @@ Chega de promessas vazias! Precisamos de ônibus pontuais, em bom estado e com h
         parentComments: undefined,
         commentsChildren: [],
         content: "This is a comment for post eef42b15-1372-44b6-b57e-8816362fe71b.",
-        like: {
-          idLike: "be7dfc46-3c8d-4417-8840-b1a89f11fd35",
-          idUser: "f03118de-8aed-495c-98c0-1e9a2fd2ef79",
-          like: true
-        }
+        like: likesComments
       }],
       location: {
         country: "Japan",
@@ -85,21 +105,7 @@ Chega de promessas vazias! Precisamos de ônibus pontuais, em bom estado e com h
           photoAuthor: "https://picsum.photos/seed/2d0b1dfa-b831-44d0-9d0d-875605e72f7e/50/50"
         }
       ],
-      comments: [{
-        idComment: "5e24dab4-ead3-497d-860f-bbed800e8300",
-        idPost: "038db1dc-5a3e-40a4-8649-1e2994c6eda0",
-        idAuthor: "ef4f19bd-a5c4-4387-ba58-a216fe2f82c7",
-        nameAuthor: "Author_5e24",
-        photoAuthor: "https://picsum.photos/seed/5e24/50/50",
-        parentComments: undefined,
-        commentsChildren: [],
-        content: "This is a comment for post 038db1dc-5a3e-40a4-8649-1e2994c6eda0.",
-        like: {
-          idLike: "da9fb2c3-0564-42e8-bd00-165cb709339c",
-          idUser: "18b8c91e-3bf2-4c73-b3e1-5430a7781a46",
-          like: false
-        }
-      }],
+      comments: commentsItens,
       location: {
         country: "USA",
         state: "ON",
@@ -147,21 +153,7 @@ export const postsMock: Array<IPosts> = [
         photoAuthor: `https://picsum.photos/seed/user-${index + 1}/50/50`,
       },
     ],
-    comments: [{
-      idComment: `comment-${index + 1}`,
-      idPost: `post-${index + 1}`,
-      idAuthor: `comment-author-${index + 1}`,
-      nameAuthor: `Commenter_${index + 1}`,
-      photoAuthor: `https://picsum.photos/seed/comment-author-${index + 1}/50/50`,
-      parentComments: undefined,
-      commentsChildren: [],
-      content: `This is a comment for post-${index + 1}.`,
-      like: {
-        idLike: `like-comment-${index + 1}`,
-        idUser: `user-comment-${index + 1}`,
-        like: index % 2 === 0,
-      },
-    }],
+    comments: commentsItens,
     location: {
       country: `Country_${index + 1}`,
       state: `State_${index + 1}`,
@@ -192,4 +184,4 @@ export const postsMock: Array<IPosts> = [
   })),
 ];
 
-  
+

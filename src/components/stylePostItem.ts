@@ -4,7 +4,8 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width } = Dimensions.get("window")
 
 interface IPropsPostItemStyle {
-    expand?: boolean
+    expand?: boolean,
+    isLike?: boolean
 } 
 
 export const stylePostItem = (props: IPropsPostItemStyle) => {
@@ -93,11 +94,18 @@ export const stylePostItem = (props: IPropsPostItemStyle) => {
             justifyContent: "space-between"
         },
         mesh: {
-            flexDirection: "row"
+            flexDirection: "row",
+            gap: width * 0.04
         },
         localization: {
             flexDirection: "row",
             alignItems: "baseline"
+        },
+        comments: {
+            flexDirection: "row",
+            gap: width * 0.02,
+            justifyContent: "space-between",
+            alignItems: "center"
         }
     })
 }

@@ -62,11 +62,11 @@ export interface IComments {
     parentComments: string | undefined
     commentsChildren: Array<IComments>  
     content: string
-    like: {
+    like: Array<{
         idLike: string
         idUser: string
         like: boolean
-    }
+    }>
 }
 
 export interface IPosts {

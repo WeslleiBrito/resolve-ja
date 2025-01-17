@@ -25,6 +25,7 @@ export default function PostItem(props: IPosts) {
         location
     } = props;
 
+    const [ isLike, setIsLike] = useState<boolean>(false)
 
     const [descriptionState, setDescriptionState] = useState<string>(description)
     const [expand, setExpand] = useState<boolean>(false)
@@ -64,9 +65,9 @@ export default function PostItem(props: IPosts) {
             <View style={styles.interactions}>
                 <View style={styles.mesh}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Fontisto name='heart-alt' size={24} color="black" />
+                        <AntDesign name={isLike ? "heart" : "hearto"} size={24} color="black" />
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={styles.comments}>
                         <AntDesign name="message1" size={24} color="black" />
                         <Text>{comments.length}</Text>
                     </View>
