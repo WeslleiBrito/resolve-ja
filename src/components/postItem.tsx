@@ -65,7 +65,7 @@ export default function PostItem(props: IPosts) {
             <View style={styles.interactions}>
                 <View style={styles.mesh}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <AntDesign name={isLike ? "heart" : "hearto"} size={24} color="black" />
+                        <AntDesign name={isLike ? "heart" : "hearto"} size={24} color={isLike ? "#fe0902" : "black"} />
                     </View>
                     <View style={styles.comments}>
                         <AntDesign name="message1" size={24} color="black" />
