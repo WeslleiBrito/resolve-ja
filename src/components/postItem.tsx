@@ -14,29 +14,18 @@ import { IPosts } from '../interfaces';
 
 export default function PostItem(props: IPosts) {
 
-    const {
-        nameAuthor,
-        sector,
-        like,
-        comments,
-        description,
-        media,
-        photoAuthor,
-        location
-    } = props;
-
     const [ isLike, setIsLike] = useState<boolean>(false)
 
-    const [descriptionState, setDescriptionState] = useState<string>(description)
+    const [descriptionState, setDescriptionState] = useState<string>(props.description)
     const [expand, setExpand] = useState<boolean>(false)
 
     const handleDescription = (): void => {
-        const listText = description.split(" ")
+        const listText = props.description.split(" ")
 
-        if (!expand && description.length > 100) {
+        if (!expand && props.description.length > 100) {
             setDescriptionState(listText.slice(0, 12).join(" ") + "...mais")
         } else {
-            setDescriptionState(description)
+            setDescriptionState(props.description)
         }
     }
 
@@ -50,33 +39,37 @@ export default function PostItem(props: IPosts) {
                 <View style={styles.author}>
                     <Image
                         style={styles.avatar}
-                        source={photoAuthor}
+                        source={props.photoAuthor}
                     />
-                    <Text style={styles.author}>{nameAuthor}</Text>
+                    <Text style={styles.author}>{props.nameAuthor}</Text>
                 </View>
 
-                <Text style={styles.sector}>{sector.nameSector}</Text>
+                <Text style={styles.sector}>{props.sector.nameSector}</Text>
             </View>
             <View style={styles.containerMedia}>
                 {
-                    media ? <Image style={styles.media} source={media.url} /> : null
+                    props.media ? <Image style={styles.media} source={props.media.url} /> : null
                 }
             </View>
             <View style={styles.interactions}>
                 <View style={styles.mesh}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <AntDesign name={isLike ? "heart" : "hearto"} size={24} color={isLike ? "#fe0902" : "black"} />
+                        <AntDesign 
+                            name={isLike ? "heart" : "hearto"} 
+                            size={24} 
+                            color={isLike ? "#fe0902" : "black"} 
+                        />
                     </View>
                     <View style={styles.comments}>
                         <AntDesign name="message1" size={24} color="black" />
-                        <Text>{comments.length}</Text>
+                        <Text>{props.comments.length}</Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <MaterialCommunityIcons name="share-all-outline" size={24} color="black" />
                     </View>
                 </View>
                 <View style={styles.localization}>
-                    <Text>{location.suburb || location.city_district}</Text>
+                    <Text>{props.location.suburb || props.location.city_district}</Text>
                     <Entypo name="location-pin" size={24} color="black" />
                 </View>
             </View>
